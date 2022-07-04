@@ -33,3 +33,18 @@ Route::middleware([
         return Inertia::render('Dashboard');
     })->name('dashboard');
 });
+
+Route::prefix('manager')
+    ->middleware('can:manager')
+    ->group(function () {
+        Route::get('index', function () {
+            dd('manager');
+        });
+    });
+
+Route::middleware('can:user')
+    ->group(function () {
+        Route::get('index', function () {
+            dd('user');
+        });
+    });

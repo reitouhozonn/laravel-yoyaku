@@ -26,26 +26,6 @@ class EventController extends Controller
         return Inertia::render('Manager/Events/index', [
             'events' => $events
         ]);
-
-        // return Inertia::render('Manager/Events/index', [
-        //     'events' => Event::all()
-        //         // ->orderBy('start_date', 'asc')
-        //         // ->paginate(10)
-        //         ->map(function ($event) {
-        //             return [
-        //                 'id' => $event->id,
-        //                 'name' => $event->name,
-        //                 'start_date' => $event->start_date,
-        //                 'end_date' => $event->end_date,
-        //                 'max_people' => $event->max_people,
-        //                 'is_visible' => $event->is_visible,
-        //             ];
-        //         }),
-        // ]);
-
-
-
-
     }
 
     /**
@@ -55,7 +35,7 @@ class EventController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Manager/Events/create');
     }
 
     /**

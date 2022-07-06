@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreEventRequest;
 use App\Http\Requests\UpdateEventRequest;
 use App\Models\Event;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
+use Inertia\Inertia;
 
 class EventController extends Controller
 {
@@ -15,7 +18,34 @@ class EventController extends Controller
      */
     public function index()
     {
-        //
+        // $events = Event::orderBy('start_date', 'asc')->paginate(10);
+        $events = DB::table('events')
+            ->orderBy('start_date', 'asc')
+            ->paginate(5);
+
+        return Inertia::render('Manager/Events/index', [
+            'events' => $events
+        ]);
+
+        // return Inertia::render('Manager/Events/index', [
+        //     'events' => Event::all()
+        //         // ->orderBy('start_date', 'asc')
+        //         // ->paginate(10)
+        //         ->map(function ($event) {
+        //             return [
+        //                 'id' => $event->id,
+        //                 'name' => $event->name,
+        //                 'start_date' => $event->start_date,
+        //                 'end_date' => $event->end_date,
+        //                 'max_people' => $event->max_people,
+        //                 'is_visible' => $event->is_visible,
+        //             ];
+        //         }),
+        // ]);
+
+
+
+
     }
 
     /**

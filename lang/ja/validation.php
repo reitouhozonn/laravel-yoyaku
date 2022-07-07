@@ -156,7 +156,14 @@ return [
     'attributes' => [
         'name' => '名前',
         'email' => 'メールアドレス',
-        'password' => 'パスワード'
+        'password' => 'パスワード',
+        'event_name' => 'イベント名',
+        'information' => ' イベント詳細',
+        'end_date' => 'イベント日付',
+        'start_time' => '開始時間',
+        'end_time' => '終了時間',
+        'max_people' => '定員'
+
     ],
 
 ];

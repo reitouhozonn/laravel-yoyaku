@@ -1,22 +1,104 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
-import Welcome from '@/Jetstream/Welcome.vue';
 import Flatpickr from '../../../Components/Flatpickr.vue';
+
+import { useForm } from '@inertiajs/inertia-vue3';
+import JetButton from '@/Jetstream/Button.vue';
+import JetInput from '@/Jetstream/Input.vue';
+import JetLabel from '@/Jetstream/Label.vue';
+import JetValidationErrors from '@/Jetstream/ValidationErrors.vue';
+import route from '../../../../../vendor/tightenco/ziggy/src/js';
+import Textarea from '../../../Components/textarea.vue';
+import JetCheckbox from '@/Jetstream/Checkbox.vue';
+
+
+
+const form = useForm({
+    event_name: '',
+    information: '',
+    event_date: '',
+    start_time: '',
+    end_time: '',
+    max_people: '',
+    is_visible: false,
+});
+
+const submit = () => {
+    form.post(route('events.store'))
+};
 </script>
 
 <template>
-    <AppLayout title="Dashboard">
+    <AppLayout title="イベント作成">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 イベント作成
             </h2>
         </template>
 
-        <div class="py-12">
+        <div class="py-4">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                    <!-- <Welcome /> -->
-                    <Flatpickr />
+                <div class="bg-white py-8 overflow-hidden shadow-xl sm:rounded-lg">
+                    <div class="max-w-2xl mt-4 mx-auto">
+                        <JetValidationErrors class="mb-4" />
+
+                        <!-- <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
+                            {{ status }}
+                        </div>
+ -->
+                        <form @submit.prevent="submit">
+                            <div>
+                                <JetLabel for="event_name" value="イベント名" />
+                                <JetInput id="event_name" v-model="form.event_name" type="text"
+                                    class="mt-1 block w-full" required />
+                            </div>
+                            <div class="mt-4">
+                                <JetLabel for="information" value="イベント詳細" />
+                                <Textarea rows="3" id="information" v-model="form.information" type="text"
+                                    class="mt-1 block w-full" />
+                            </div>
+
+                            <div class="md:flex justify-between">
+                                <div class="mt-4">
+                                    <JetLabel for="event_date" value="イベント日付" />
+                                    <JetInput id="event_date" v-model="form.event_date" type="text"
+                                        class="mt-1 block w-full" />
+                                </div>
+
+                                <div class="mt-4">
+                                    <JetLabel for="start_time" value="開始時間" />
+                                    <JetInput id="start_time" v-model="form.start_time" type="text"
+                                        class="mt-1 block w-full" />
+                                </div>
+
+                                <div class="mt-4">
+                                    <JetLabel for="end_time" value="終了時間" />
+                                    <JetInput id="end_time" v-model="form.end_time" type="text"
+                                        class="mt-1 block w-full" />
+                                </div>
+                            </div>
+                            <div class="md:flex justify-between items-end">
+                                <div class="mt-4">
+                                    <JetLabel for="max_people" value="定員数" />
+                                    <JetInput id="max_people" v-model="form.max_people" type="number"
+                                        class="mt-1 block w-full" />
+                                </div>
+                                <div class="flex space-x-6 justify-around">
+
+                                    <label class="flex items-center">
+                                        <JetCheckbox v-model:checked="form.is_visible" name="表示" />
+                                        <span class="ml-2 text-sm text-gray-600">表示する</span>
+                                    </label>
+
+                                </div>
+                                <JetButton class="ml-4" :class="{ 'opacity-25': form.processing }"
+                                    :disabled="form.processing">
+                                    新規登録
+                                </JetButton>
+
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

@@ -9,6 +9,8 @@ import JetValidationErrors from '@/Jetstream/ValidationErrors.vue';
 import route from '../../../../../vendor/tightenco/ziggy/src/js';
 import JetCheckbox from '@/Jetstream/Checkbox.vue';
 import Textara from '../../../Components/textara.vue';
+import JetBanner from '@/Jetstream/Banner.vue';
+
 
 
 
@@ -40,6 +42,7 @@ const submit = () => {
                 <div class="bg-white py-8 overflow-hidden shadow-xl sm:rounded-lg">
                     <div class="max-w-2xl mt-4 mx-auto">
                         <JetValidationErrors class="mb-4" />
+                        <JetBanner />
 
                         <form @submit.prevent="submit">
                             <div>

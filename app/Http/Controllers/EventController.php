@@ -6,7 +6,9 @@ use App\Http\Requests\StoreEventRequest;
 use App\Http\Requests\UpdateEventRequest;
 use App\Models\Event;
 use App\Models\User;
+use App\Services\EventService;
 use Carbon\Carbon;
+use Database\Seeders\EventSeeder;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
@@ -23,6 +25,8 @@ class EventController extends Controller
         $events = DB::table('events')
             ->orderBy('start_date', 'asc')
             ->paginate(5);
+
+
 
         return Inertia::render('Manager/Events/index', [
             'events' => $events
@@ -47,15 +51,27 @@ class EventController extends Controller
      */
     public function store(StoreEventRequest $request)
     {
-        $start = $request['event_date'] . " " . $request['start_time'];
-        $startDate = Carbon::createFromFormat(
-            'Y-m-d H:i',
-            $start
+        $check = EventService::checkEventDuplication(
+            $request['event_date'],
+            $request['start_time'],
+            $request['end_time']
         );
-        $end = $request['event_date'] . " " . $request['end_time'];
-        $endDate = Carbon::createFromFormat(
-            'Y-m-d H:i',
-            $end
+
+        if ($check) {
+            session()->flash('flash.banner', 'この時間は、すでに他の予約が存在します。');
+            session()->flash('flash.bannerStyle', 'danger');
+
+            return Inertia::render('Manager/Events/create');
+        }
+
+        $startDate = EventService::joinDateAndTime(
+            $request['event_date'],
+            $request['start_time']
+        );
+
+        $endDate = EventService::joinDateAndTime(
+            $request['event_date'],
+            $request['end_time']
         );
 
         Event::create([
@@ -67,8 +83,10 @@ class EventController extends Controller
             'is_visible' => $request['is_visible'],
         ]);
 
+        session()->flash('flash.banner', '登録しました。');
+        // session()->flash('flash.bannerStyle', 'success');
 
-        return redirect()->route('events.index')->banner('登録しました。');
+        return redirect()->route('events.index');
     }
 
     /**

@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
     <div>
         <flat-pickr v-model="date"></flat-pickr>
     </div>
@@ -18,4 +18,4 @@ export default {
         flatPickr
     }
 }
-</script>
+</script> -->

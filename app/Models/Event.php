@@ -17,9 +17,9 @@ class Event extends Model
     protected $fillable = [
         'name',
         'information',
-        'max_people',
         'start_date',
         'end_date',
+        'max_people',
         'is_visible'
     ];
 }

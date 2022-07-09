@@ -1,6 +1,5 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
-import Flatpickr from '../../../Components/Flatpickr.vue';
 
 import { useForm } from '@inertiajs/inertia-vue3';
 import JetButton from '@/Jetstream/Button.vue';
@@ -8,8 +7,8 @@ import JetInput from '@/Jetstream/Input.vue';
 import JetLabel from '@/Jetstream/Label.vue';
 import JetValidationErrors from '@/Jetstream/ValidationErrors.vue';
 import route from '../../../../../vendor/tightenco/ziggy/src/js';
-import Textarea from '../../../Components/textarea.vue';
 import JetCheckbox from '@/Jetstream/Checkbox.vue';
+import Textara from '../../../Components/textara.vue';
 
 
 
@@ -42,10 +41,6 @@ const submit = () => {
                     <div class="max-w-2xl mt-4 mx-auto">
                         <JetValidationErrors class="mb-4" />
 
-                        <!-- <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
-                            {{ status }}
-                        </div>
- -->
                         <form @submit.prevent="submit">
                             <div>
                                 <JetLabel for="event_name" value="イベント名" />
@@ -54,7 +49,7 @@ const submit = () => {
                             </div>
                             <div class="mt-4">
                                 <JetLabel for="information" value="イベント詳細" />
-                                <Textarea rows="3" id="information" v-model="form.information" type="text"
+                                <Textara rows="3" id="information" v-model="form.information" type="text"
                                     class="mt-1 block w-full" />
                             </div>
 

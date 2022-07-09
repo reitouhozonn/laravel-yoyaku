@@ -3,9 +3,12 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import Pagination from '@/Components/Pagination.vue';
 import Button from '../../../../../vendor/laravel/jetstream/stubs/inertia/resources/js/Jetstream/Button.vue';
 import { Link } from '@inertiajs/inertia-vue3';
+import JetBanner from '@/Jetstream/Banner.vue';
+
 
 defineProps({
     events: Object,
+    status: String,
 })
 </script>
 
@@ -17,12 +20,22 @@ defineProps({
             </h2>
         </template>
 
+
+
+
         <div class="py-4">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                     <!-- <Welcome /> -->
                     <section class="text-gray-600 body-font">
                         <div class="container px-5 py-8 mx-auto">
+
+                            <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
+                                {{ status }}
+                            </div>
+                            <JetBanner />
+
+
                             <div class="flex pl-4 mt-4 lg:w-2/3 w-full mx-auto ">
                                 <Link :href="route('events.create')" class="flex ml-auto">
                                 <button

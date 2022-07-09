@@ -33,7 +33,6 @@ const logout = () => {
 
         <Head :title="title" />
 
-        <JetBanner />
 
         <div class="min-h-screen bg-gray-100">
             <nav class="bg-white border-b border-gray-100">
@@ -60,6 +59,8 @@ const logout = () => {
                                 </JetNavLink>
                             </div>
                         </div>
+
+
 
                         <div class="hidden sm:flex sm:items-center sm:ml-6">
                             <div class="ml-3 relative">
@@ -298,6 +299,8 @@ const logout = () => {
                     </div>
                 </div>
             </nav>
+
+
 
             <!-- Page Heading -->
             <header v-if="$slots.header" class="bg-white shadow">

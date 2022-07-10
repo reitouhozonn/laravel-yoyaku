@@ -70,7 +70,11 @@ defineProps({
                                     </thead>
                                     <tbody>
                                         <tr v-for="event in events.data" :key="event.id">
-                                            <td class="px-4 py-3">{{ event.name }}</td>
+                                            <td class="text-blue-500 px-4 py-3">
+                                                <Link :href="route('events.show', event.id)">
+                                                {{ event.name }}
+                                                </Link>
+                                            </td>
                                             <td class="px-4 py-3">{{ event.start_date }}</td>
                                             <td class="px-4 py-3">{{ event.end_date }}</td>
                                             <td class="px-4 py-3">Free</td>

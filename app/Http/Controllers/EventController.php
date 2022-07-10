@@ -97,7 +97,20 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
-        //
+        $event = Event::findOrFail($event->id);
+
+        $eventDate = $event->eventDate;
+        $startTime = $event->startTime;
+        $endTime = $event->endTime;
+
+        // dd($event);
+
+        return Inertia::render('Manager/Events/show', [
+            'event' => $event,
+            'eventDate' => $eventDate,
+            'startTime' => $startTime,
+            'endTime' => $endTime,
+        ]);
     }
 
     /**

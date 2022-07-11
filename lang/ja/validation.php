@@ -158,6 +158,7 @@ return [
         'email' => 'メールアドレス',
         'password' => 'パスワード',
         'event_name' => 'イベント名',
+        'event_date' => 'イベント日時',
         'information' => ' イベント詳細',
         'end_date' => 'イベント日付',
         'start_time' => '開始時間',

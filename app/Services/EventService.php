@@ -8,10 +8,8 @@ use App\Models\Event;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
-
 class EventService
 {
-
     public static function checkEventDuplication($eventDate, $startTime, $endTime)
     {
         return DB::table('events')
@@ -19,6 +17,15 @@ class EventService
             ->whereTime('end_date', '>', $startTime)
             ->whereTime('start_date', '<', $endTime)
             ->exists();
+    }
+
+    public static function countEventDuplication($eventDate, $startTime, $endTime)
+    {
+        return DB::table('events')
+            ->whereDate('start_date', $eventDate)
+            ->whereTime('end_date', '>', $startTime)
+            ->whereTime('start_date', '<', $endTime)
+            ->count();
     }
 
 

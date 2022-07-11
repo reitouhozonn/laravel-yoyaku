@@ -1,13 +1,12 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
 
-import { useForm } from '@inertiajs/inertia-vue3';
 import JetButton from '@/Jetstream/Button.vue';
 import JetLabel from '@/Jetstream/Label.vue';
 import JetValidationErrors from '@/Jetstream/ValidationErrors.vue';
-import route from '../../../../../vendor/tightenco/ziggy/src/js';
-import JetCheckbox from '@/Jetstream/Checkbox.vue';
 import JetBanner from '@/Jetstream/Banner.vue';
+import { Link } from '@inertiajs/inertia-vue3';
+
 
 
 defineProps({
@@ -17,19 +16,6 @@ defineProps({
     endTime: String,
 })
 
-const form = useForm({
-    event_name: '',
-    information: '',
-    event_date: '',
-    start_time: '',
-    end_time: '',
-    max_people: '',
-    is_visible: false,
-});
-
-const submit = () => {
-    form.get(route('events.edit', $event.id))
-};
 </script>
 
 <template>
@@ -47,58 +33,57 @@ const submit = () => {
                         <JetValidationErrors class="mb-4" />
                         <JetBanner />
 
-                        <form @submit.prevent="submit">
-                            <div>
-                                <JetLabel for="event_name" value="イベント名" />
-                                {{ event.name }}
-                            </div>
+                        <div>
+                            <JetLabel for="event_name" value="イベント名" />
+                            {{ event.name }}
+                        </div>
+                        <div class="mt-4">
+                            <JetLabel for="information" value="イベント詳細" />
+                            <p style="white-space: pre-wrap;">
+                                {{ event.information }}
+                            </p>
+                        </div>
+
+                        <div class="md:flex justify-between">
                             <div class="mt-4">
-                                <JetLabel for="information" value="イベント詳細" />
-                                <p style="white-space: pre-wrap;">
-                                    {{ event.information }}
-                                </p>
+                                <JetLabel for="event_date" value="イベント日付" />
+                                {{ eventDate }}
                             </div>
 
-                            <div class="md:flex justify-between">
-                                <div class="mt-4">
-                                    <JetLabel for="event_date" value="イベント日付" />
-                                    {{ eventDate }}
-                                </div>
-
-                                <div class="mt-4">
-                                    <JetLabel for="start_time" value="開始時間" />
-                                    {{ startTime }}
-                                </div>
-
-                                <div class="mt-4">
-                                    <JetLabel for="end_time" value="終了時間" />
-                                    {{ endTime }}
-                                </div>
+                            <div class="mt-4">
+                                <JetLabel for="start_time" value="開始時間" />
+                                {{ startTime }}
                             </div>
-                            <div class="md:flex justify-between items-end">
-                                <div class="mt-4">
-                                    <JetLabel for="max_people" value="定員数" />
-                                    {{ event.max_people }}
-                                </div>
-                                <div class="flex space-x-6 justify-around">
 
-                                    <label class="flex items-center">
-                                        <div v-if="event.is_visible">
-                                            <span class="ml-2 text-sm text-gray-600">表示中</span>
-                                        </div>
-                                        <div v-else="event.is_visible">
-                                            <span class="ml-2 text-sm text-gray-600">非表示中</span>
-                                        </div>
-                                    </label>
+                            <div class="mt-4">
+                                <JetLabel for="end_time" value="終了時間" />
+                                {{ endTime }}
+                            </div>
+                        </div>
+                        <div class="md:flex justify-between items-end">
+                            <div class="mt-4">
+                                <JetLabel for="max_people" value="定員数" />
+                                {{ event.max_people }}
+                            </div>
+                            <div class="flex space-x-6 justify-around">
 
-                                </div>
-                                <JetButton class="ml-4" :class="{ 'opacity-25': form.processing }"
-                                    :disabled="form.processing">
-                                    編集する
-                                </JetButton>
+                                <label class="flex items-center">
+                                    <div v-if="event.is_visible">
+                                        <span class="ml-2 text-sm text-gray-600">表示中</span>
+                                    </div>
+                                    <div v-else="event.is_visible">
+                                        <span class="ml-2 text-sm text-gray-600">非表示中</span>
+                                    </div>
+                                </label>
 
                             </div>
-                        </form>
+                            <Link :href="route('events.edit', event.id)">
+                            <JetButton class="ml-4">
+                                編集する
+                            </JetButton>
+                            </Link>
+
+                        </div>
                     </div>
                 </div>
             </div>

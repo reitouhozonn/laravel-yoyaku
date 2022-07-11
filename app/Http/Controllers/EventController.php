@@ -10,6 +10,7 @@ use App\Services\EventService;
 use Carbon\Carbon;
 use Database\Seeders\EventSeeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class EventController extends Controller
@@ -61,7 +62,7 @@ class EventController extends Controller
             session()->flash('flash.banner', 'この時間は、すでに他の予約が存在します。');
             session()->flash('flash.bannerStyle', 'danger');
 
-            return Inertia::render('Manager/Events/create');
+            return Redirect::route('events.create');
         }
 
         $startDate = EventService::joinDateAndTime(
@@ -121,7 +122,18 @@ class EventController extends Controller
      */
     public function edit(Event $event)
     {
-        //
+        $event = Event::findOrFail($event->id);
+
+        $eventDate = $event->editEventDate;
+        $startTime = $event->editStartTime;
+        $endTime = $event->editEndTime;
+
+        return Inertia::render('Manager/Events/edit', [
+            'event' => $event,
+            'eventDate' => $eventDate,
+            'startTime' => $startTime,
+            'endTime' => $endTime,
+        ]);
     }
 
     /**
@@ -133,7 +145,55 @@ class EventController extends Controller
      */
     public function update(UpdateEventRequest $request, Event $event)
     {
-        //
+        $check = EventService::countEventDuplication(
+            $request['event_date'],
+            $request['start_time'],
+            $request['end_time']
+        );
+
+        if ($check > 1) {
+            $event = Event::findOrFail($event->id);
+
+            // $eventDate = $event->editEventDate;
+            // $startTime = $event->editStartTime;
+            // $endTime = $event->editEndTime;
+            session()->flash('flash.banner', 'この時間は、すでに他の予約が存在します。');
+            session()->flash('flash.bannerStyle', 'danger');
+
+            return Redirect::route(
+                'events.edit',
+                [
+                    'event' => $event,
+                    //     'eventDate' => $eventDate,
+                    //     'startTime' => $startTime,
+                    //     'endTime' => $endTime,
+                ]
+            );
+        }
+
+        $startDate = EventService::joinDateAndTime(
+            $request['event_date'],
+            $request['start_time']
+        );
+
+        $endDate = EventService::joinDateAndTime(
+            $request['event_date'],
+            $request['end_time']
+        );
+
+        $event = Event::findOrFail($event->id);
+        $event->name = $request['event_name'];
+        $event->information = $request['information'];
+        $event->start_date = $startDate;
+        $event->end_date = $endDate;
+        $event->max_people = $request['max_people'];
+        $event->is_visible = $request['is_visible'];
+        $event->save();
+
+        session()->flash('flash.banner', '登録しました。');
+        // session()->flash('flash.bannerStyle', 'success');
+
+        return redirect()->route('events.index');
     }
 
     /**

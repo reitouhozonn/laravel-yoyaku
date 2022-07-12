@@ -14,6 +14,7 @@ defineProps({
     eventDate: String,
     startTime: String,
     endTime: String,
+    today: String,
 })
 
 </script>
@@ -77,7 +78,7 @@ defineProps({
                                 </label>
 
                             </div>
-                            <Link :href="route('events.edit', event.id)">
+                            <Link v-if="eventDate >= today" :href="route('events.edit', event.id)">
                             <JetButton class="ml-4">
                                 編集する
                             </JetButton>

@@ -22,11 +22,12 @@ class EventController extends Controller
      */
     public function index()
     {
-        // $events = Event::orderBy('start_date', 'asc')->paginate(10);
+        $today = carbon::today();
+
         $events = DB::table('events')
+            ->whereDate('start_date', '>=', $today)
             ->orderBy('start_date', 'asc')
             ->paginate(5);
-
 
 
         return Inertia::render('Manager/Events/index', [
@@ -103,14 +104,16 @@ class EventController extends Controller
         $eventDate = $event->eventDate;
         $startTime = $event->startTime;
         $endTime = $event->endTime;
+        $today = Carbon::today()->format('Y年m月d日');
 
-        // dd($event);
+        // dd($today);
 
         return Inertia::render('Manager/Events/show', [
             'event' => $event,
             'eventDate' => $eventDate,
             'startTime' => $startTime,
             'endTime' => $endTime,
+            'today' => $today,
         ]);
     }
 
@@ -154,9 +157,6 @@ class EventController extends Controller
         if ($check > 1) {
             $event = Event::findOrFail($event->id);
 
-            // $eventDate = $event->editEventDate;
-            // $startTime = $event->editStartTime;
-            // $endTime = $event->editEndTime;
             session()->flash('flash.banner', 'この時間は、すでに他の予約が存在します。');
             session()->flash('flash.bannerStyle', 'danger');
 
@@ -164,9 +164,6 @@ class EventController extends Controller
                 'events.edit',
                 [
                     'event' => $event,
-                    //     'eventDate' => $eventDate,
-                    //     'startTime' => $startTime,
-                    //     'endTime' => $endTime,
                 ]
             );
         }
@@ -194,6 +191,19 @@ class EventController extends Controller
         // session()->flash('flash.bannerStyle', 'success');
 
         return redirect()->route('events.index');
+    }
+
+    public function past()
+    {
+        $today = Carbon::today();
+        $events = DB::table('events')
+            ->whereDate('start_date', '<', $today)
+            ->orderBy('start_date', 'desc')
+            ->paginate(10);
+
+        return Inertia::render('Manager/Events/past', [
+            'events' => $events,
+        ]);
     }
 
     /**

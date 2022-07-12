@@ -16,7 +16,7 @@ defineProps({
     <AppLayout title="イベント管理">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                イベント管理!
+                過去のイベント一覧
             </h2>
         </template>
 
@@ -34,17 +34,12 @@ defineProps({
                             <JetBanner />
 
 
-                            <div class="flex pl-4 mt-4 lg:w-2/3 w-full mx-auto ">
-                                <Link :href="route('events.past')" class="flex ml-auto">
-                                <button
-                                    class="flex ml-auto mb-4 text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded">過去のイベント</button>
-                                </Link>
-
+                            <!-- <div class="flex pl-4 mt-4 lg:w-2/3 w-full mx-auto ">
                                 <Link :href="route('events.create')" class="flex ml-auto">
                                 <button
                                     class="flex ml-auto mb-4 text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">新規作成</button>
                                 </Link>
-                            </div>
+                            </div> -->
 
                             <div class="w-full mx-auto overflow-auto">
                                 <table class="table-auto w-full text-left whitespace-no-wrap">

@@ -15,6 +15,7 @@ defineProps({
     startTime: String,
     endTime: String,
     today: String,
+    users: String,
 })
 
 </script>
@@ -85,6 +86,17 @@ defineProps({
                             </Link>
 
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="pb-4">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div v-if="users[0]" class="bg-white py-8 overflow-hidden shadow-xl sm:rounded-lg">
+                    <div class="max-w-2xl mt-4 mx-auto">
+                        <p>予約状況</p>
+                        {{ users }}
                     </div>
                 </div>
             </div>

@@ -34,12 +34,6 @@ defineProps({
                             <JetBanner />
 
 
-                            <!-- <div class="flex pl-4 mt-4 lg:w-2/3 w-full mx-auto ">
-                                <Link :href="route('events.create')" class="flex ml-auto">
-                                <button
-                                    class="flex ml-auto mb-4 text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">新規作成</button>
-                                </Link>
-                            </div> -->
 
                             <div class="w-full mx-auto overflow-auto">
                                 <table class="table-auto w-full text-left whitespace-no-wrap">
@@ -77,9 +71,12 @@ defineProps({
                                             </td>
                                             <td class="px-4 py-3">{{ event.start_date }}</td>
                                             <td class="px-4 py-3">{{ event.end_date }}</td>
-                                            <td class="px-4 py-3">Free</td>
+                                            <td v-if="event.number_of_people == null" class="px-4 py-3">0</td>
+                                            <td v-else class="px-4 py-3">{{ event.number_of_people }}</td>
                                             <td class="px-4 py-3">{{ event.max_people }}</td>
-                                            <td class="px-4 py-3">{{ event.is_visible }}</td>
+                                            <td v-if="event.is_visible === 1"
+                                                class="px-4 py-3 bg-green-300 rounded-full">
+                                                表示中</td>
                                         </tr>
                                     </tbody>
                                 </table>

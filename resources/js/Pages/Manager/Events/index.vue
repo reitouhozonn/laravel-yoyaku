@@ -16,7 +16,7 @@ defineProps({
     <AppLayout title="イベント管理">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                イベント管理!
+                本日以降のイベント
             </h2>
         </template>
 
@@ -82,9 +82,12 @@ defineProps({
                                             </td>
                                             <td class="px-4 py-3">{{ event.start_date }}</td>
                                             <td class="px-4 py-3">{{ event.end_date }}</td>
-                                            <td class="px-4 py-3">Free</td>
+                                            <td v-if="event.number_of_people == null" class="px-4 py-3">0</td>
+                                            <td v-else class="px-4 py-3">{{ event.number_of_people }}</td>
                                             <td class="px-4 py-3">{{ event.max_people }}</td>
-                                            <td class="px-4 py-3">{{ event.is_visible }}</td>
+                                            <td v-if="event.is_visible === 1"
+                                                class="px-4 py-3 bg-green-300 rounded-full">
+                                                表示中</td>
                                         </tr>
                                     </tbody>
                                 </table>

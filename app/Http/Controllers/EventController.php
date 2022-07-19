@@ -24,11 +24,20 @@ class EventController extends Controller
     {
         $today = carbon::today();
 
+        $reservedPeople = DB::table('reservations')
+            ->select('event_id', DB::raw('sum(number_of_people) as number_of_people'))
+            ->groupBy('event_id');
+
+
         $events = DB::table('events')
+            ->leftJoinSub($reservedPeople, 'reservedPeople', function ($join) {
+                $join->on('events.id', '=', 'reservedPeople.event_id');
+            })
             ->whereDate('start_date', '>=', $today)
             ->orderBy('start_date', 'asc')
             ->paginate(5);
-
+        // ->get();
+        // dd($events);
 
         return Inertia::render('Manager/Events/index', [
             'events' => $events
@@ -101,6 +110,8 @@ class EventController extends Controller
     {
         $event = Event::findOrFail($event->id);
 
+        $users = $event->users;
+
         $eventDate = $event->eventDate;
         $startTime = $event->startTime;
         $endTime = $event->endTime;
@@ -114,6 +125,7 @@ class EventController extends Controller
             'startTime' => $startTime,
             'endTime' => $endTime,
             'today' => $today,
+            'users' => $users,
         ]);
     }
 
@@ -196,7 +208,15 @@ class EventController extends Controller
     public function past()
     {
         $today = Carbon::today();
+
+        $reservedPeople = DB::table('reservations')
+            ->select('event_id', DB::raw('sum(number_of_people) as number_of_people'))
+            ->groupBy('event_id');
+
         $events = DB::table('events')
+            ->leftJoinSub($reservedPeople, 'reservedPeople', function ($join) {
+                $join->on('events.id', '=', 'reservedPeople.event_id');
+            })
             ->whereDate('start_date', '<', $today)
             ->orderBy('start_date', 'desc')
             ->paginate(10);

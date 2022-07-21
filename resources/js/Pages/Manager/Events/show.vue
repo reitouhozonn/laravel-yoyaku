@@ -15,7 +15,7 @@ defineProps({
     startTime: String,
     endTime: String,
     today: String,
-    users: String,
+    users: Object,
 })
 
 </script>
@@ -93,10 +93,27 @@ defineProps({
 
         <div class="pb-4">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div v-if="users[0]" class="bg-white py-8 overflow-hidden shadow-xl sm:rounded-lg">
+                <div v-if="users[0]" class="bg-white py-4 overflow-hidden shadow-xl sm:rounded-lg">
                     <div class="max-w-2xl mt-4 mx-auto">
-                        <p>予約状況</p>
-                        {{ users }}
+                        <div class="text-center pb-2">予約状況</div>
+                        <table class="table-auto w-full text-left whitespace-no-wrap">
+                            <thead>
+                                <tr>
+                                    <th
+                                        class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                        予約者名</th>
+                                    <th
+                                        class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                        予約人数</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="user in users">
+                                    <td class="px-4 py-3">{{ user.name }}</td>
+                                    <td class="px-4 py-3">{{ user.number_of_people }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

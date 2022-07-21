@@ -26,6 +26,7 @@ class EventController extends Controller
 
         $reservedPeople = DB::table('reservations')
             ->select('event_id', DB::raw('sum(number_of_people) as number_of_people'))
+            ->whereNull('canceled_date')
             ->groupBy('event_id');
 
 
@@ -112,6 +113,18 @@ class EventController extends Controller
 
         $users = $event->users;
 
+        $reservations = [];
+
+        foreach ($users as $user) {
+            $reservedInfo = [
+                'name' => $user->name,
+                'number_of_people' => $user->pivot->number_of_people,
+                'canceled_date' => $user->pivot->canceled_date
+            ];
+
+            array_push($reservations, $reservedInfo);
+        }
+
         $eventDate = $event->eventDate;
         $startTime = $event->startTime;
         $endTime = $event->endTime;
@@ -125,7 +138,7 @@ class EventController extends Controller
             'startTime' => $startTime,
             'endTime' => $endTime,
             'today' => $today,
-            'users' => $users,
+            'users' => $reservations,
         ]);
     }
 
@@ -211,6 +224,7 @@ class EventController extends Controller
 
         $reservedPeople = DB::table('reservations')
             ->select('event_id', DB::raw('sum(number_of_people) as number_of_people'))
+            ->whereNull('canceled_date')
             ->groupBy('event_id');
 
         $events = DB::table('events')

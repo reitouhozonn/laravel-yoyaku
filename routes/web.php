@@ -23,7 +23,7 @@ Route::get('/', function () {
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
-});
+})->name('calendar');
 
 Route::middleware([
     'auth:sanctum',
@@ -44,9 +44,9 @@ Route::prefix('manager')
         Route::resource('events', EventController::class);
     });
 
-Route::middleware('can:user')
-    ->group(function () {
-        Route::get('index', function () {
-            dd('user');
-        });
-    });
+// Route::middleware('can:user')
+//     ->group(function () {
+//         Route::get('index', function () {
+//             dd('user');
+//         });
+//     });

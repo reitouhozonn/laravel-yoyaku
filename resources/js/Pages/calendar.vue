@@ -12,99 +12,75 @@ defineProps({
 <template>
 
     <Head title="Calendar" />
-
-    <div
-        class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0">
-        <div v-if="canLogin" class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
-            <Link v-if="$page.props.user" :href="route('dashboard')" class="text-sm text-gray-700 underline">
-            Dashboard
-            </Link>
-
-            <template v-else>
-                <Link :href="route('login')" class="text-sm text-gray-700 underline">
-                Log in
-                </Link>
-
-                <Link v-if="canRegister" :href="route('register')" class="ml-4 text-sm text-gray-700 underline">
-                Register
-                </Link>
-            </template>
+    <header class="bg-white shadow">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                カレンダー
+            </h2>
         </div>
+        <div class="relative flex items-top justify-center bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0">
+            <div v-if="canLogin" class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
+                <Link v-if="$page.props.user" :href="route('dashboard')" class="text-sm text-gray-700 underline">
+                Dashboard
+                </Link>
 
-        <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
+                <template v-else>
+                    <Link :href="route('login')" class="text-sm text-gray-700 underline">
+                    Log in
+                    </Link>
 
-            <div class="flex justify-center mt-4 sm:items-center sm:justify-between">
-                <div class="text-center text-sm text-gray-500 sm:text-left">
-                </div>
+                    <Link v-if="canRegister" :href="route('register')" class="ml-4 text-sm text-gray-700 underline">
+                    Register
+                    </Link>
+                </template>
+            </div>
+        </div>
+    </header>
 
-                <div class="ml-4 text-center text-sm text-gray-500 sm:text-right sm:ml-0">
-                    Laravel v{{ laravelVersion }} (PHP v{{ phpVersion }})
+    <main>
+        <div class="py-4">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                    <section class="text-gray-600 body-font">
+                        <div class="container px-5 py-8 mx-auto">
+                            <div class="w-full mx-auto overflow-auto">
+                                <table class="table-auto w-full text-left whitespace-no-wrap">
+                                    <thead>
+                                        <tr>
+                                            <th
+                                                class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                                イベント名</th>
+                                            <th
+                                                class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                                開始日時</th>
+                                            <th
+                                                class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                                終了日時</th>
+                                            <th
+                                                class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                                予約人数</th>
+                                            <th
+                                                class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                                定員</th>
+                                            <th
+                                                class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                                表示</th>
+                                            <!-- <th
+                                                class="w-10 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                            </th> -->
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
                 </div>
             </div>
         </div>
-    </div>
+
+    </main>
+
+
 </template>
-
-<!-- <style scoped>
-.bg-gray-100 {
-    background-color: #f7fafc;
-    background-color: rgba(247, 250, 252, var(--tw-bg-opacity));
-}
-
-.border-gray-200 {
-    border-color: #edf2f7;
-    border-color: rgba(237, 242, 247, var(--tw-border-opacity));
-}
-
-.text-gray-400 {
-    color: #cbd5e0;
-    color: rgba(203, 213, 224, var(--tw-text-opacity));
-}
-
-.text-gray-500 {
-    color: #a0aec0;
-    color: rgba(160, 174, 192, var(--tw-text-opacity));
-}
-
-.text-gray-600 {
-    color: #718096;
-    color: rgba(113, 128, 150, var(--tw-text-opacity));
-}
-
-.text-gray-700 {
-    color: #4a5568;
-    color: rgba(74, 85, 104, var(--tw-text-opacity));
-}
-
-.text-gray-900 {
-    color: #1a202c;
-    color: rgba(26, 32, 44, var(--tw-text-opacity));
-}
-
-@media (prefers-color-scheme: dark) {
-    .dark\:bg-gray-800 {
-        background-color: #2d3748;
-        background-color: rgba(45, 55, 72, var(--tw-bg-opacity));
-    }
-
-    .dark\:bg-gray-900 {
-        background-color: #1a202c;
-        background-color: rgba(26, 32, 44, var(--tw-bg-opacity));
-    }
-
-    .dark\:border-gray-700 {
-        border-color: #4a5568;
-        border-color: rgba(74, 85, 104, var(--tw-border-opacity));
-    }
-
-    .dark\:text-white {
-        color: #fff;
-        color: rgba(255, 255, 255, var(--tw-text-opacity));
-    }
-
-    .dark\:text-gray-400 {
-        color: #cbd5e0;
-        color: rgba(203, 213, 224, var(--tw-text-opacity));
-    }
-}
-</style> -->

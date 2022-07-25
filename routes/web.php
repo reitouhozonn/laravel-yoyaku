@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\EventController;
+use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +17,36 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return Inertia::render('calendar', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'laravelVersion' => Application::VERSION,
+        'phpVersion' => PHP_VERSION,
+    ]);
+})->name('calendar');
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return Inertia::render('Dashboard');
+    })->name('dashboard');
 });
+
+
+
+Route::prefix('manager')
+    ->middleware('can:manager')
+    ->group(function () {
+        Route::get('events/past', [EventController::class, 'past'])->name('events.past');
+        Route::resource('events', EventController::class);
+    });
+
+// Route::middleware('can:user')
+//     ->group(function () {
+//         Route::get('index', function () {
+//             dd('user');
+//         });
+//     });

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\ReservationController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -25,15 +26,15 @@ Route::get('/', function () {
     ]);
 })->name('calendar');
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-])->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
-});
+// Route::middleware([
+//     'auth:sanctum',
+//     config('jetstream.auth_session'),
+//     'verified',
+// ])->group(function () {
+//     Route::get('/dashboard', function () {
+//         return Inertia::render('Dashboard');
+//     })->name('dashboard');
+// });
 
 
 
@@ -44,9 +45,7 @@ Route::prefix('manager')
         Route::resource('events', EventController::class);
     });
 
-// Route::middleware('can:user')
-//     ->group(function () {
-//         Route::get('index', function () {
-//             dd('user');
-//         });
-//     });
+Route::middleware('can:user')
+    ->group(function () {
+        Route::get('/dashboard', [ReservationController::class, 'dashboard'])->name('dashboard');
+    });

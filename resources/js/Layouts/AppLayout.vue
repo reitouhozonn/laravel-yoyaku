@@ -50,7 +50,7 @@ const logout = () => {
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <JetNavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                                    Dashboard
+                                    イベントカレンダー
                                 </JetNavLink>
 
                                 <JetNavLink v-if="$page.props.user.role > 0 && $page.props.user.role <= 5"
@@ -209,7 +209,7 @@ const logout = () => {
                     class="sm:hidden">
                     <div class="pt-2 pb-3 space-y-1">
                         <JetResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                            Dashboard
+                            イベントカレンダー
                         </JetResponsiveNavLink>
                         <JetResponsiveNavLink v-if="$page.props.user.role > 0 && $page.props.user.role <= 5"
                             :href="route('events.index')" :active="route().current('events.index')">

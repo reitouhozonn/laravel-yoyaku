@@ -1,6 +1,10 @@
 <script setup>
 import CalendarTime from './calendar-time.vue';
 import CalendarDay from './calendar-day.vue';
+
+defineProps({
+    currentWeek: Array
+})
 </script>
 
 
@@ -17,13 +21,7 @@ import CalendarDay from './calendar-day.vue';
                             <input class="block mb-4 mx-auto" type="text">
                             <div class="flex border border-green-400 mx-auto">
                                 <CalendarTime />
-                                <CalendarDay />
-                                <CalendarDay />
-                                <CalendarDay />
-                                <CalendarDay />
-                                <CalendarDay />
-                                <CalendarDay />
-                                <CalendarDay />
+                                <CalendarDay v-bind:current-week="currentWeek" />
                             </div>
                         </div>
                     </div>

@@ -5,8 +5,7 @@ import CalendarComponent from '../Components/calendarComponent.vue';
 defineProps({
     canLogin: Boolean,
     canRegister: Boolean,
-    laravelVersion: String,
-    phpVersion: String,
+    currentWeek: Array
 });
 </script>
 
@@ -37,7 +36,6 @@ defineProps({
             </div>
         </div>
     </header>
-
-    <CalendarComponent />
+    <CalendarComponent v-bind:current-week="currentWeek" />
 
 </template>

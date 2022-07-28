@@ -2,9 +2,8 @@
 
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ReservationController;
-use Illuminate\Foundation\Application;
+use App\Http\Controllers\TopCalendarController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,26 +16,16 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('calendar', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-})->name('calendar');
+// Route::get('/', function () {
+//     return Inertia::render('calendar', [
+//         'canLogin' => Route::has('login'),
+//         'canRegister' => Route::has('register'),
+//         'laravelVersion' => Application::VERSION,
+//         'phpVersion' => PHP_VERSION,
+//     ]);
+// })->name('calendar');
 
-// Route::middleware([
-//     'auth:sanctum',
-//     config('jetstream.auth_session'),
-//     'verified',
-// ])->group(function () {
-//     Route::get('/dashboard', function () {
-//         return Inertia::render('Dashboard');
-//     })->name('dashboard');
-// });
-
-
+Route::get('/', [TopCalendarController::class, 'top'])->name('calendar');
 
 Route::prefix('manager')
     ->middleware('can:manager')

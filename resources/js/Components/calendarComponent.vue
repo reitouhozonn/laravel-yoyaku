@@ -2,9 +2,6 @@
 import CalendarTime from './calendar-time.vue';
 import CalendarDay from './calendar-day.vue';
 
-defineProps({
-    currentWeek: Array
-})
 </script>
 
 
@@ -21,9 +18,11 @@ defineProps({
                             <input class="block mb-4 mx-auto" type="text">
                             <div class="flex border border-green-400 mx-auto">
                                 <CalendarTime />
-                                <CalendarDay v-bind:current-week="currentWeek" />
+                                <CalendarDay />
                             </div>
                         </div>
+                        <div v-for="event in $page.props.events" :key="event.id">{{ event.start_date }}</div>
+                        <div>{{ $page.props.events }}</div>
                     </div>
                 </section>
             </div>

@@ -1,4 +1,6 @@
 <script setup>
+import { Link } from '@inertiajs/inertia-vue3';
+
 defineProps({
     events: Array
 })
@@ -12,7 +14,10 @@ defineProps({
             <div v-if="$page.props.events" class="py-1 px2 h-8 border border-gray-200 text-center">
                 <div v-for="event in $page.props.events">
                     <div v-if="today.checkDate + ' ' + time == event.start_date" class="text-xs bg-blue-200">
-                        {{ event.name }}</div>
+                        <Link :href="route('events.detail', event.id)">
+                        {{ event.name }}
+                        </Link>
+                    </div>
                 </div>
             </div>
             <div v-else class="py-1 px2 h-8 border border-gray-200 text-center"></div>

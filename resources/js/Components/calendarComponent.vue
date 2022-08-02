@@ -12,10 +12,10 @@ import CalendarDay from './calendar-day.vue';
                 <section class="text-gray-600 body-font">
                     <div class="container px-5 py-8 mx-auto">
                         <div class="w-full mx-auto overflow-auto">
-                            <div class="text-center text-sm">
+                            <!-- <div class="text-center text-sm">
                                 日付を選択してください。
                             </div>
-                            <input class="block mb-4 mx-auto" type="text">
+                            <input class="block mb-4 mx-auto" type="text"> -->
                             <div class="flex border border-green-400 mx-auto">
                                 <CalendarTime />
                                 <CalendarDay />

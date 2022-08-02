@@ -35,6 +35,8 @@ Route::prefix('manager')
     });
 
 Route::middleware('can:user')
+    ->controller(ReservationController::class)
     ->group(function () {
-        Route::get('/dashboard', [ReservationController::class, 'dashboard'])->name('dashboard');
+        Route::get('/dashboard', 'dashboard')->name('dashboard');
+        Route::get('/{id}', 'detail')->name('events.detail');
     });

@@ -39,4 +39,5 @@ Route::middleware('can:user')
     ->group(function () {
         Route::get('/dashboard', 'dashboard')->name('dashboard');
         Route::get('/{id}', 'detail')->name('events.detail');
+        Route::post('/{id}', 'reserve')->name('events.reserve');
     });

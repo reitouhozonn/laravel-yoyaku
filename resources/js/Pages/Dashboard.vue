@@ -1,7 +1,7 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
-import Welcome from '@/Jetstream/Welcome.vue';
 import CalendarComponent from '../Components/calendarComponent.vue';
+
 </script>
 
 <template>

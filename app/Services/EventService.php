@@ -2,9 +2,6 @@
 
 namespace App\Services;
 
-use App\Http\Requests\StoreEventRequest;
-use App\Http\Requests\UpdateEventRequest;
-use App\Models\Event;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 

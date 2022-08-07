@@ -37,6 +37,7 @@ Route::middleware('can:user')
         Route::get('/mypage/{id}', [MyPageController::class, 'show'])->name('mypage.show');
         Route::post('/mypage/{id}', [MyPageController::class, 'cancel'])->name('mypage.cancel');
 
-        Route::get('/events/{id}', [ReservationController::class, 'detail'])->name('events.detail');
         Route::post('/events/{id}', [ReservationController::class, 'reserve'])->name('events.reserve');
     });
+
+Route::middleware('auth')->get('/events/{id}', [ReservationController::class, 'detail'])->name('events.detail');

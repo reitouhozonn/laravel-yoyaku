@@ -64,9 +64,15 @@ class ReservationController extends Controller
         } else {
             $reservablePeople = $event->max_people;
         }
-        // dd($reservablePeople);
+        $isReserved = Reservation::where('user_id', '=', Auth::id())
+            ->where('event_id', '=', $id)
+            ->whereNull('canceled_date')
+            ->latest()
+            ->first();
+
 
         return Inertia::render('Eventdetail', [
+            'isReserved' => $isReserved,
             'event' => $event,
             'eventDate' => $eventDate,
             'startTime' => $startTime,
@@ -95,7 +101,7 @@ class ReservationController extends Controller
                 'event_id' => $request->id,
                 'number_of_people' =>  $request->reserved_people,
             ]);
-            session()->flash('flash.banner', 'success');
+            session()->flash('flash.banner', '予約しました。');
         } else {
             session()->flash('flash.banner', 'この人数は予約できません。');
             session()->flash('flash.bannerStyle', 'danger');

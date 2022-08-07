@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\MyPageController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\TopCalendarController;
 use Illuminate\Support\Facades\Route;
@@ -16,28 +17,27 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return Inertia::render('calendar', [
-//         'canLogin' => Route::has('login'),
-//         'canRegister' => Route::has('register'),
-//         'laravelVersion' => Application::VERSION,
-//         'phpVersion' => PHP_VERSION,
-//     ]);
-// })->name('calendar');
 
 Route::get('/', [TopCalendarController::class, 'top'])->name('calendar');
+
 
 Route::prefix('manager')
     ->middleware('can:manager')
     ->group(function () {
         Route::get('events/past', [EventController::class, 'past'])->name('events.past');
-        Route::resource('events', EventController::class);
+        Route::resource('events', EventController::class)->except('destroy');
     });
 
+
 Route::middleware('can:user')
-    ->controller(ReservationController::class)
     ->group(function () {
-        Route::get('/dashboard', 'dashboard')->name('dashboard');
-        Route::get('/{id}', 'detail')->name('events.detail');
-        Route::post('/{id}', 'reserve')->name('events.reserve');
+        Route::get('/dashboard', [ReservationController::class, 'dashboard'])->name('dashboard');
+
+        Route::get('/mypage', [MyPageController::class, 'index'])->name('mypage.index');
+        Route::get('/mypage/{id}', [MyPageController::class, 'show'])->name('mypage.show');
+        Route::post('/mypage/{id}', [MyPageController::class, 'cancel'])->name('mypage.cancel');
+
+        Route::post('/events/{id}', [ReservationController::class, 'reserve'])->name('events.reserve');
     });
+
+Route::middleware('auth')->get('/events/{id}', [ReservationController::class, 'detail'])->name('events.detail');

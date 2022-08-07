@@ -13,6 +13,7 @@ import { useForm } from '@inertiajs/inertia-vue3';
 
 
 const props = defineProps({
+    isReserved: Object,
     event: Object,
     eventDate: String,
     startTime: String,
@@ -74,17 +75,22 @@ const submit = () => {
                                     <JetLabel for="max_people" value="定員数" />
                                     {{ event.max_people }}
                                 </div>
-                                <div v-if="reservablePeople !== 0" class="mt-4">
+                                <div v-if="props.isReserved == null && reservablePeople !== 0" class="mt-4">
                                     <JetLabel for="reserved_people" value="予約できる人数" />
                                     <select id="reserved_people" v-model="form.reserved_people">
                                         <option v-for="i in reservablePeople">{{ i }}</option>
                                     </select>
+                                    <JetButton class="ml-4" :class="{ 'opacity-25': form.processing }"
+                                        :disabled="form.processing">
+                                        予約する
+                                    </JetButton>
                                 </div>
-                                <JetButton v-if="reservablePeople !== 0" class="ml-4"
-                                    :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                                    予約する
-                                </JetButton>
-                                <div v-else class="text-red-500 text-xl">このイベントは満員です</div>
+                                <div v-if="isReserved !== null">
+                                    <div class="text-red-500 text-xl">すでに予約しています。</div>
+                                </div>
+                                <div v-if="reservablePeople == 0">
+                                    <div class="text-red-500 text-xl">このイベントは満員です</div>
+                                </div>
                             </div>
                         </form>
                     </div>

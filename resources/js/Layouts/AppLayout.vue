@@ -52,6 +52,9 @@ const logout = () => {
                                 <JetNavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     イベントカレンダー
                                 </JetNavLink>
+                                <JetNavLink :href="route('mypage.index')" :active="route().current('mypage.index')">
+                                    マイページ
+                                </JetNavLink>
 
                                 <JetNavLink v-if="$page.props.user.role > 0 && $page.props.user.role <= 5"
                                     :href="route('events.index')" :active="route().current('events.index')">
@@ -211,6 +214,10 @@ const logout = () => {
                         <JetResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
                             イベントカレンダー
                         </JetResponsiveNavLink>
+                        <JetResponsiveNavLink :href="route('mypage.index')" :active="route().current('mypage.index')">
+                            マイページ
+                        </JetResponsiveNavLink>
+
                         <JetResponsiveNavLink v-if="$page.props.user.role > 0 && $page.props.user.role <= 5"
                             :href="route('events.index')" :active="route().current('events.index')">
                             イベント管理

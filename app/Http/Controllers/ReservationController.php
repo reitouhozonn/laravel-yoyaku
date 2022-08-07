@@ -95,7 +95,7 @@ class ReservationController extends Controller
                 'event_id' => $request->id,
                 'number_of_people' =>  $request->reserved_people,
             ]);
-            session()->flash('flash.banner', 'success');
+            session()->flash('flash.banner', '予約しました。');
         } else {
             session()->flash('flash.banner', 'この人数は予約できません。');
             session()->flash('flash.bannerStyle', 'danger');

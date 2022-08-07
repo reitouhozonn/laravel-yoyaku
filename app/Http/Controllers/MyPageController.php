@@ -33,6 +33,7 @@ class MyPageController extends Controller
         $reservation = Reservation::where('user_id', '=', Auth::id())
             ->where('event_id', '=', $id)
             ->whereNull('canceled_date')
+            ->latest()
             ->first();
 
         $eventDate = $event->eventDate;
@@ -55,6 +56,7 @@ class MyPageController extends Controller
         $reservation = Reservation::where('user_id', '=', Auth::id())
             ->where('event_id', '=', $id)
             ->whereNull('canceled_date')
+            ->latest()
             ->first();
 
         if ($request->number_of_people === $reservation->number_of_people) {

@@ -21,7 +21,6 @@ import JetBanner from '@/Jetstream/Banner.vue';
                             </div>
                         </div>
                         <div v-for="event in $page.props.events" :key="event.id">{{ event.start_date }}</div>
-                        <div>{{ $page.props.events }}</div>
                     </div>
                 </section>
             </div>

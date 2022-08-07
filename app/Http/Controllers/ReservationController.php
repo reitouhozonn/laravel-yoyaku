@@ -64,9 +64,15 @@ class ReservationController extends Controller
         } else {
             $reservablePeople = $event->max_people;
         }
-        // dd($reservablePeople);
+        $isReserved = Reservation::where('user_id', '=', Auth::id())
+            ->where('event_id', '=', $id)
+            ->whereNull('canceled_date')
+            ->latest()
+            ->first();
+
 
         return Inertia::render('Eventdetail', [
+            'isReserved' => $isReserved,
             'event' => $event,
             'eventDate' => $eventDate,
             'startTime' => $startTime,
